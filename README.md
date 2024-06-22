@@ -1,3 +1,8 @@
 # class-tracker
 
-This is a prgram to track your classes for HTML Sites like UCI, UCLA. It imports all the dynamic entries from sites which then gets passed in dictonaries assigneing a column to the value.
+Objectives:
+-> Keep track of classes you need to track
+-> Avoid bot behavior and just check for vacancies
+-> let user know if his creds work
+-> email user for open spot
+
