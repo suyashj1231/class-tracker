@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import winsound
-
+import mail_send
 
 # sample URL
 # to get url for your site go to websoc -> search for your class via code, number etc 
@@ -13,18 +13,5 @@ header = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 } # to prevent bot behavior
 
-def check_enrollment():
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    rows = soup.find_all('tr')
-    
-    enrollments = {}
-    for row in rows[1:]:  # Skip the header row
-        columns = row.find_all('td')
-        if len(columns) >= 12:
-            code = columns[0].text.strip()
-            enroll_count = int(columns[10].text.strip())  # Get the current enrollment count (Enr)
-            enrollments[code] = enroll_count
-    
-    return enrollments
-
+# test mail send function
+mail_send.send_email() 

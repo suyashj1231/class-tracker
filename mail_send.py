@@ -12,7 +12,7 @@ sender_password = "xxxx yyyy zzzz wwww" # pasword set via app password on site I
 recipient_email = "xyz@gmail.com"# you can use the same mail to prevent spam detection
 
 
-def send_email(subject, body, sender_email, sender_password, recipient_email):
+def send_email(subject="", body="", sender_email=sender_email, sender_password = sender_password, recipient_email = recipient_email):
     try:
         print("Sending email...")
         msg = MIMEMultipart()
