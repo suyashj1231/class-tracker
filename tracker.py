@@ -49,6 +49,20 @@ while True:
         print(f"{code}: Enrolled - {count}")
         #print(current_enrollments)
     
+
+    print("\nChecking for changes...")
+    change_detected = False
+    for code, count in current_enrollments.items():
+        if count != 75 and count != 300:
+            print(f"Enrollment count for {code} is not 75 or 300:")
+            print(f"Current: Enrolled - {count}")
+            winsound.PlaySound("SystemHand", winsound.SND_ALIAS)
+            
+            subject = f"Enrollment Alert: {code}"
+            body = f"The enrollment count for {code} is currently {count}, which is not 75 or 300."
+            mail_send.send_email(subject=subject, body=body)
+            change_detected = True
+            break  # Exit the loop as we only want to send one email
    
 
 
