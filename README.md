@@ -11,3 +11,8 @@ Objectives:
 # require email and password set up via https://support.google.com/accounts/answer/185833
 # Using this method, get an app password so you don't need verification 2FA  while sending mail to yourself using it
 # create a custom password
+
+####
+    Also need to install these libraries
+    -> pip install requests
+    -> pip install bs4
