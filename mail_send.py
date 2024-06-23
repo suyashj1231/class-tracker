@@ -27,6 +27,6 @@ def send_email(subject="", body="", sender_email=sender_email, sender_password =
         server.send_message(msg)
         server.quit()
         print("Email notification sent successfully.")
-    except Exception as e:
+    except Exception as e: # anything unknown
         print(f"An error occurred while sending the email: {str(e)}")
 
