@@ -37,3 +37,18 @@ start_body = "The enrollment monitoring program has started running."
 # test mail send function
 mail_send.send_email(subject=start_subject,body=start_body)
 
+# set time in which t ocheck again
+# NOTE : DONT use too small of time, I beleive 180 should be the min to use to prevent ban
+check_interval = 240
+
+while True:
+    current_enrollments = check_enrollment()
+    
+    print("Current Enrollment Data:")
+    for code, count in current_enrollments.items():
+        print(f"{code}: Enrolled - {count}")
+        #print(current_enrollments)
+    
+   
+
+
