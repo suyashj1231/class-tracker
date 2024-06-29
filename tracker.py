@@ -63,6 +63,15 @@ while True:
             mail_send.send_email(subject=subject, body=body)
             change_detected = True
             break  # Exit the loop as we only want to send one email
-   
+    
+    if change_detected:
+        print("Change detected. Stopping the loop.")
+        end_time = time.time() + 300  # 5 minutes
+        while time.time() < end_time:
+            winsound.PlaySound("SystemHand", winsound.SND_ALIAS)
+        break  # Exit the main loop after the sound has played for 5 minutes
+    
+    print(f"Waiting for {check_interval / 60} minutes...\n")
+    time.sleep(check_interval)
 
 
