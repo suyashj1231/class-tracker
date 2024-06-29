@@ -7,9 +7,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-sender_email = "betujain1710@gmail.com" # email via which email gets sent
-sender_password = "vksy giop ssry xlxz" # pasword set via app password on site I gave above
-recipient_email = "tuxpaint1231@gmail.com" # you can use the same mail to prevent spam detection
+sender_email = "xxxx@gmail.com" # email via which email gets sent
+sender_password = "xxx xx x x xx x " # pasword set via app password on site I gave above
+recipient_email = "yyyyy@gmail.com" # you can use the same mail to prevent spam detection
 
 
 def send_email(subject="", body="", sender_email=sender_email, sender_password = sender_password, recipient_email = recipient_email):
