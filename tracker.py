@@ -3,11 +3,18 @@ from bs4 import BeautifulSoup
 import time
 import winsound
 import mail_send
+from datetime import datetime
+
+
+def print_timestamp():
+    
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z")
+    print(f"[{timestamp}]")
 
 # sample URL
 # to get url for your site go to websoc -> search for your class via code, number etc 
 # -> att the bottom of page click -> add bookmark -> now copt that URL here.
-url = 'https://www.reg.uci.edu/perl/WebSoc?YearTerm=2024-92&ShowFinals=1&ShowComments=1&Dept=COGS&CourseNum=108'
+url = 'https://www.reg.uci.edu/perl/WebSoc?YearTerm=2024-92&ShowFinals=1&ShowComments=1&Dept=COMPSCI&CourseCodes=34300-34305'
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -16,7 +23,10 @@ headers = {
 
 # function to check about the enrollment status 
 def check_enrollment():
-    response = requests.get(url, headers=headers)
+    with requests.get(url, headers=headers, stream=True) as response:
+        response.raise_for_status()
+        content = response.content
+    
     soup = BeautifulSoup(response.text, 'html.parser')
     rows = soup.find_all('tr')
     
@@ -35,13 +45,14 @@ def check_enrollment():
 start_subject = "Enrollment Monitoring Started"
 start_body = "The enrollment monitoring program has started running."
 # test mail send function
-mail_send.send_email(subject=start_subject,body=start_body)
+#mail_send.send_email(subject=start_subject,body=start_body)
 
 # set time in which t ocheck again
 # NOTE : DONT use too small of time, I beleive 180 should be the min to use to prevent ban
-check_interval = 240
+check_interval = 180
 
 while True:
+    print_timestamp()
     current_enrollments = check_enrollment()
     
     print("Current Enrollment Data:")
