@@ -2,13 +2,11 @@
 
 Watches a UCI course section on WebSoc and tells you when a seat opens. It polls the WebSoc page for your course codes, reads the enrollment column, and when a count changes from the full value it plays a sound and emails you.
 
-I wrote it to get into a full COMPSCI section without refreshing WebSoc all day.
-
 ## How it works
 
-`tracker.py` fetches the WebSoc results page for the course codes in `url` every 3 minutes, parses the table with BeautifulSoup, and maps each section code to its current enrollment. When a section's count stops matching the full capacity, it plays a Windows system sound (`winsound`) and sends an email through Gmail SMTP (`mail_send.py`), then stops polling.
+`tracker.py` fetches the WebSoc results page for the course codes in `url` every 3 minutes, parses the table with BeautifulSoup, and maps each section code to its current enrollment. When a section's count stops matching the full capacity, it sends an email through Gmail SMTP (`mail_send.py`), then plays a Windows system alert (`winsound`) on repeat for five minutes so you notice even away from your inbox, and exits.
 
-Three minutes is deliberate. Polling much faster risks getting your IP blocked by the registrar's site, and seats rarely open and close within that window.
+The 3-minute interval keeps the request rate low enough that the registrar's site is unlikely to block you.
 
 ## Setup
 
