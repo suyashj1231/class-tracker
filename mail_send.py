@@ -3,13 +3,14 @@
 # using this method get a app password so you dont need verification to 2FA while using it
 # create a custom password
 
+import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-sender_email = "xxxx@gmail.com" # email via which email gets sent
-sender_password = "xxx xx x x xx x " # pasword set via app password on site I gave above
-recipient_email = "yyyyy@gmail.com" # you can use the same mail to prevent spam detection
+sender_email = os.environ.get("TRACKER_SENDER_EMAIL", "")  # Gmail account that sends the alert
+sender_password = os.environ.get("TRACKER_APP_PASSWORD", "")  # Gmail app password
+recipient_email = os.environ.get("TRACKER_RECIPIENT", sender_email)  # defaults to yourself
 
 
 def send_email(subject="", body="", sender_email=sender_email, sender_password = sender_password, recipient_email = recipient_email):

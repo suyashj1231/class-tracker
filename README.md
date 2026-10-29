@@ -1,20 +1,30 @@
 # class-tracker
 
-Objectives:
--> Keep track of classes you need to track
--> Avoid bot behavior and check for vacancies 
--> Let the user know if his creds work *
--> Email user for an open spot
--> play audio on device t o know user via sound or in case email system doesn't work
+Watches a UCI course section on WebSoc and tells you when a seat opens. It polls the WebSoc page for your course codes, reads the enrollment column, and when a count changes from the full value it plays a sound and emails you.
 
-*NOTE : 
-# needs a Gmail account 
-# require email and password set up via https://support.google.com/accounts/answer/185833
-# Using this method, get an app password so you don't need verification 2FA  while sending mail to yourself using it
-# create a custom password
+I wrote it to get into a full COMPSCI section without refreshing WebSoc all day.
 
-####
-    Also need to install these libraries
-    -> pip install requests
-    -> pip install bs4
-    These are needed for email and url requests to work
+## How it works
+
+`tracker.py` fetches the WebSoc results page for the course codes in `url` every 3 minutes, parses the table with BeautifulSoup, and maps each section code to its current enrollment. When a section's count stops matching the full capacity, it plays a Windows system sound (`winsound`) and sends an email through Gmail SMTP (`mail_send.py`), then stops polling.
+
+Three minutes is deliberate. Polling much faster risks getting your IP blocked by the registrar's site, and seats rarely open and close within that window.
+
+## Setup
+
+```bash
+pip install requests beautifulsoup4
+export TRACKER_SENDER_EMAIL=you@gmail.com
+export TRACKER_APP_PASSWORD="xxxx xxxx xxxx xxxx"   # a Gmail app password, not your login
+export TRACKER_RECIPIENT=you@gmail.com              # optional, defaults to the sender
+python tracker.py
+```
+
+Create the app password at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords) (2-step verification has to be on).
+
+To track a different class, search for it on [WebSoc](https://www.reg.uci.edu/perl/WebSoc), copy the results URL, paste it into `url` in `tracker.py`, and set the full capacity numbers the check compares against.
+
+## Limits
+
+- The alert sound uses `winsound`, so it only works on Windows. On macOS, swap it for `os.system("afplay /System/Library/Sounds/Glass.aiff")`.
+- Capacity values are hardcoded to the class I was watching (75 and 300).
